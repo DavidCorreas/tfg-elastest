@@ -1,0 +1,15 @@
+[submodule "tfg-elastest-sut"]
+	path = tfg-elastest-sut
+	url = https://github.com/DavidCorreas/tfg-elastest-sut.git
+[submodule "tfg-elastest-emulator"]
+	path = tfg-elastest-emulator
+	url = https://github.com/google/android-emulator-container-scripts.git
+[submodule "tfg-elastest-test"]
+	path = tfg-elastest-test
+	url = https://github.com/DavidCorreas/tfg-elastest-test.git
+[submodule "tfg-elastest-wsl2"]
+	path = tfg-elastest-wsl2
+	url = https://github.com/DavidCorreas/tfg-elastest-wsl2.git
+[submodule "tfg-elastest-docker_resources"]
+	path = tfg-elastest-docker_resources
+	url = https://github.com/stefanprodan/dockprom
