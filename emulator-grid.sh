@@ -5,5 +5,4 @@ set -a
 source tfg-elastest-test/emu-docker.env
 
 # Iniciamos el docker
-cd tfg-elastest-emulator/
-docker-compose -f js/docker/docker-compose.yaml -f js/docker/development.yaml -f ../tfg-elastest-test/compose-grid.yml up -d
+docker-compose -f tfg-elastest-emulator/js/docker/docker-compose.yaml -f tfg-elastest-emulator/js/docker/development.yaml -f tfg-elastest-test/compose-grid.yml --project-directory=. up -d
