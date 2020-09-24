@@ -10,3 +10,7 @@ docker-compose -f tfg-elastest-emulator/js/docker/docker-compose.yaml -f tfg-ela
 
 cd tfg-elastest-sut
 docker-compose -p tfg-elastest up -d --build
+
+cd ..
+export ADB_INSTALL_TIMEOUT=10
+adb -s emulator-5554 install ./tfg-elastest-sut/tfg-elastest-sut-cordova_app/apk/app-debug.apk
