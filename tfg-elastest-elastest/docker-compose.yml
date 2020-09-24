@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  elsatest:
+    image: elastest/platform
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.elastest:/data
+    command: start --jenkins

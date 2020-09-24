@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  
+  # Appium Docker Android
+  appium:
+    image: appium/appium
+    container_name: appium
+    depends_on:
+      - emulator
+    privileged: true
+    ports:
+      - 4723:4723
+    volumes:
+      - ~/.android:/root/.android
+      - ${PATH_DIR_APK}:/opt
+    environment:
+      - REMOTE_ADB=true
+      - ANDROID_DEVICES=${DEVICE_HOST}:${DEVICE_PORT}
+      - REMOTE_ADB_POLLING_SEC=60
+      - CHROMEDRIVER_AUTODOWNLOAD=true
+      - CONNECT_TO_GRID=true
+      - SELENIUM_HOST=localhost
+      - SELENIUM_PORT="37000/eus/v1/"
+    networks:
+      envoymesh:
+        aliases:
+          - appium
