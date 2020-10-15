@@ -1,3 +1,4 @@
 #!/bin/bash
 source /tmp/emu-docker/configure.sh
-exec "$@"
+emu-docker interactive
+./create_web_container.sh
