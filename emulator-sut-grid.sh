@@ -1,5 +1,7 @@
 #!/bin/bash
 
+current_dir="$(dirname $(realpath "$0"))"
+
 mode="up -d --build"
 if [ ! -z $1 ]; then
     if [ $1 == "down" ];then
@@ -66,9 +68,9 @@ docker-compose -f tfg-elastest-test/compose-grid.yml --project-directory=. $mode
 
 # Levanta el sut, tanto back como front web
 printAndSleep "SUT"
-cd tfg-elastest-sut
+cd $current_dir/tfg-elastest-sut
 docker-compose $mode
-cd ..
+cd $current_dir
 
 # Instala la aplicacion en el emulador
 if [ "$mode" != "down" ]; then
