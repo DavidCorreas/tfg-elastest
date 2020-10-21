@@ -2,16 +2,39 @@
 Trabajo de fin de grado hecho por David Correas Oliver. Contiene una aplicación hecha con el stack MEAN y pruebas
 automáticas end-to-end sobre esta aplicación.
 
-## Clonado del projecto
+---
+## Clonado del proyecto
 Como este proyecto cuenta con númerosos submódulos, el proyecto ha de clonarse con el siguiente comando:
-`git clone --recurse-submodules -j8 https://github.com/DavidCorreas/tfg-elastest.git`
+```sh
+$ git clone --recurse-submodules -j8 https://github.com/DavidCorreas/tfg-elastest.git
+```
 
 Es necesario usar `--recurse-submodules` para descargar también todos los repositorios anidados. El argumento `-j8`
 es para que se descargue de una forma más rápida con versión de Git _1.9 - 2.12_, y `-j` con versión superior a _2.8_. 
 
+---
+## Requisitos del proyecto
+Los únicos requisitos que se necesitan para este proyecto es poder ejecutar **docker** y **docker-compose**. 
+
+Para que el emulador dockerizado
+funcione, también se necesita que la máquina donde se ejecuta tenga habilitado **KVM**. Más información sobre los requisitos del emulador en su [repositorio](https://github.com/google/android-emulator-container-scripts).
+
+- Para la ejecucion de este proyecto en **Windows**, es necesario seguir las instrucciones de [tfg-elastest-wsl2](https://github.com/DavidCorreas/tfg-elastest-wsl2).
+
+---
 ## Setup
+Para que el proyecto funcione correctamente, hay que hacer una serie de pasos para configurar la máquina donde se vaya a ejecutar. 
+Toda la configuración del proyecto se hace con un único script: 
+```sh
+$ cd tfg-elastest
+$ ./setup-emulator.sh
+```
 
+Lo que realiza este script es lo siguiente:
+- Configura el emulador en docker deseado para poder ejecutar la aplicación y las pruebas. El emulador recomendado para este proyecto es (27) `28 P google_apis_playstore (x86_64)` como imagen del sistema y (1) `EMU stable 30.1.5` como emulador.
+- Configura las claves en `~/.android` para que todos los servicios se puedan comunicar con el emulador.
 
+---
 ## Componentes
 Cada repositorio y cada componenete cuentan con un README.md contando sus objetivos y la forma de ejecutarlos/desplegarlos.
 Si se necesita más información sobre cualquiera de los repositorios anidados, contienen una descripción más detallada
@@ -68,13 +91,83 @@ Se han solventado las siguientes limitaciones
 - Incapacidad de virtualización en el kernel por defecto de WSL2.
 
 
-
+---
 ## Despliegues automáticos
 Para lidiar con la complejidad de este repositorio, se han añadido una serie de scripts que ejecutan las funcionalidades
 y muestran los objetivos en una única linea de comandos. Los únicos requisitos son que se cuente con una terminal bash,
 con acceso a docker.
 
-### EMULADOR + SELENIUM GRID
-#### Requisitos
-- (WSL2): Ejecutar con [custom kernel](https://github.com/DavidCorreas/tfg-elastest-wsl2/blob/29071b02f25162500bb35e660d0610a8fb347fba/README.md) con virtualización anidada.
+### SUT (Aplicación MEAN, parte web)
+Aplicación web hecha con Angular, NodeJS, Express y MongoDB. Más información en [tfg-elastest-sut](https://github.com/DavidCorreas/tfg-elastest-sut.git).
 
+#### Requisitos
+- Poder ejecutar **docker** y **docker-compose**.
+
+#### Despliegue
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./sut-web.sh
+```
+
+#### Acceso
+- Aplicación web (Angular): [http://localhost:4200/](http://localhost:4200/)
+
+#### Parar
+Para parar todos los servicios ejecutar:
+```sh
+$ cd tfg-elastest
+$ ./sut-web.sh down
+```
+
+### EMULADOR + SELENIUM HUB
+Emulador android dockerizado, conectado con Appium a Selenium Hub, para realizar pruebas.
+
+#### Requisitos
+- Poder ejecutar docker y docker-compose.
+- Configurar el emulador. Más información en los [requisitos](##-Requisitos-del-proyecto) del proyecto.
+
+#### Despliegue
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./emulator-grid.sh
+```
+
+#### Acceso
+- Emulador (aceptar sitio no seguro), acceso con usuario `tfg-elastest` y contraseña `hello` (se pueden cambiar y añadir usuarios en `/tfg-setup/entrypoint.sh`): [http://localhost/](http://localhost/)
+- Consola Selenium Hub: [http://localhost:4444/grid/console](http://localhost:4444/grid/console)
+
+#### Parar
+Para parar todos los servicios ejecutar:
+```sh
+$ cd tfg-elastest
+$ ./emulator-grid.sh down
+```
+
+### EMULADOR + SELENIUM GRID + SUT
+Emulador android dockerizado, conectado con Appium a Selenium Hub, para realizar pruebas.
+Aplicación MEAN, parte web y móvil (instalado en el emulador).
+
+#### Requisitos
+- Poder ejecutar docker y docker-compose.
+- Configurar el emulador. Más información en los [requisitos](##-Requisitos-del-proyecto) del proyecto.
+
+#### Despliegue
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./emulator-grid-sut.sh
+```
+
+#### Acceso
+- Emulador con la aplicación (aceptar sitio no seguro), acceso con usuario `tfg-elastest` y contraseña `hello` (se pueden cambiar y añadir usuarios en `/tfg-setup/entrypoint.sh`): [http://localhost/](http://localhost/)
+- Consola Selenium Hub: [http://localhost:4444/grid/console](http://localhost:4444/grid/console)
+- Aplicación web (Angular): [http://localhost:4200/](http://localhost:4200/)
+
+#### Parar
+Para parar todos los servicios ejecutar:
+```sh
+$ cd tfg-elastest
+$ ./emulator-grid-sut.sh down
+```
