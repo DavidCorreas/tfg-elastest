@@ -31,11 +31,6 @@ function wait-for-device {
     rm /tmp/tmp-script.sh
 }
 
-# Definimos las variables de entorno que no estan en el contexto del docker-compose
-printAndSleep "Setting env variables"
-set -a
-source tfg-elastest-test/emu-docker.env
-
 # Iniciamos el emulador
 if [ "$mode" != "down" ]; then
     printAndSleep "Web emulator"
@@ -48,7 +43,7 @@ if [ "$mode" != "down" ]; then
     wait-for-device
 fi
 printAndSleep "Selenium Hub and Appium"
-docker-compose -f tfg-elastest-test/compose-grid.yml --project-directory=. $mode
+docker-compose -f tfg-elastest-test/appium-hub/compose-grid.yml --project-directory=. --env-file=./tfg-elastest-test/appium-hub/emu-docker.env $mode
 
 # Elimina lo ultimo para que se elimine la red
 if [ "$mode" == "down" ]; then

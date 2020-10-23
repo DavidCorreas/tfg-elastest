@@ -19,8 +19,6 @@ function printAndSleep {
 
 # Levanta el sut, tanto back como front web
 printAndSleep "SUT"
-cd $current_dir/tfg-elastest-sut
-docker-compose $mode
-cd $current_dir
+docker-compose -f $current_dir/tfg-elastest-sut/docker-compose.yml -f $current_dir/tfg-elastest-sut/development-compose.yml --env-file=$current_dir/tfg-elastest-sut/.env $mode
 
 exit 0
