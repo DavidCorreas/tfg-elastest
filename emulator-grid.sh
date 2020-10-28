@@ -31,6 +31,10 @@ function wait-for-device {
     rm /tmp/tmp-script.sh
 }
 
+# Definimos las variables de entorno que no estan en el contexto del docker-compose
+set -a
+source tfg-elastest-test/appium-hub/emu-docker.env
+
 # Iniciamos el emulador
 if [ "$mode" != "down" ]; then
     printAndSleep "Web emulator"

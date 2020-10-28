@@ -90,9 +90,59 @@ Se han solventado las siguientes limitaciones
 - Inaccesibilidad del subsistema Linux por el resto de equipos de la red local.
 - Incapacidad de virtualización en el kernel por defecto de WSL2.
 
+---
+## TESTS
+Se han facilitado unos scripts para hacer test sobre la aplicación. Estos scripts dejan todo preparado para la ejecución de las pruebas, por
+lo que solo habrá que tener los [requisitos del proyecto](##-Requisitos-del-proyecto) para que funcionen los test.
+
+#### Ver resultados de los test
+Todos los resultados del test se guardan en la raíz del proyecto, en la carpeta `test-results`. Se puede visualizar el contenido desde un navegador.
+Por ejemplo, se puede copiar en la barra de búsqueda el fichero `./test-results/log.html` para visualizar el log.
+
+### TEST WEB
+Ejecuta test sobre la aplicación web hecha con Angular. Cuando este test es desplegado, la página únicamente es accesible a través de [Selenoid](http://localhost:9090) ya que no se mapean los puertos con la máquina host.
+
+Test suites creados para web:
+- W_login.robot
+- W_posts.robot
+
+### Ejecución
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./test-web.sh [<test>.robot (Opcional: solo si la suite tiene tests web. W_posts.robot por defecto)]
+```
+
+### TEST MÓVIL
+Ejecuta test sobre la aplicación android, hecha con Cordova a partir de la aplicación Angular. Para ver el proceso del test, se puede acceder al emulador
+a través del siguiente [enlace](http://localhost).
+
+Test suites creados para web:
+- M_login.robot
+- M_posts.robot
+
+### Ejecución
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./test-movil.sh [<test>.robot (Opcional: solo si la suite tiene tests web. M_posts.robot por defecto)]
+```
+
+### TEST WEB Y MÓVIL
+Ejecuta test híbridos, tanto en la aplicación android, hecha con Cordova como en la aplicación web. La idea es que interaccionen ambas interfaces y que responda el backend, dando igual de donde provengan las peticiones. El test puede seguirse tanto la parte web en [Selenoid UI](http://localhost:9090), como la parte movil en el [emulador](http://localhost).
+
+Test suites creados para web:
+- W_M_login.robot
+
+### Ejecución
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./test-hibrid.sh 
+```
 
 ---
-## Despliegues automáticos
+## DESPLIEGUES AUTOMÁTICOS
 Para lidiar con la complejidad de este repositorio, se han añadido una serie de scripts que ejecutan las funcionalidades
 y muestran los objetivos en una única linea de comandos. Los únicos requisitos son que se cuente con una terminal bash,
 con acceso a docker.
@@ -118,6 +168,29 @@ Para parar todos los servicios ejecutar:
 ```sh
 $ cd tfg-elastest
 $ ./sut-web.sh down
+```
+
+### SUT + SELENOID
+Consiste del sut mencionado en la sección anterior y Selenoid y Selenoid UI. El sut deja de estar disponible a través de localhost y únicamente se puede vez a través de la interfaz de Selenoid. Su propósito principal es servir de punto de acceso para los test.
+
+#### Requisitos
+- Poder ejecutar **docker** y **docker-compose**.
+
+#### Despliegue
+Se debe ejecutar el siguiente comando:
+```sh
+$ cd tfg-elastest
+$ ./selenoid-sut.sh
+```
+
+#### Acceso
+- Selenoid UI: [http://localhost:9090](http://localhost:9090)
+
+#### Parar
+Para parar todos los servicios ejecutar:
+```sh
+$ cd tfg-elastest
+$ ./selenoid-sut.sh down
 ```
 
 ### EMULADOR + SELENIUM HUB

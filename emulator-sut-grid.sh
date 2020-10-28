@@ -31,13 +31,10 @@ function install-apk {
     rm /tmp/tmp-script.sh
 }
 
-
-
 #### INICIO DEL SCRIPT ####
-
 # Definimos las variables de entorno que no estan en el contexto del docker-compose
 set -a
-source tfg-elastest-test/emu-docker.env
+source tfg-elastest-test/appium-hub/emu-docker.env
 
 # Iniciamos el emulador y appium con selenium hub
 if [ "$mode" != "down" ]; then

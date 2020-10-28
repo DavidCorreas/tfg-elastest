@@ -12,14 +12,9 @@ function printAndSleep {
 
 # Levantamos infrastructura para el test
 printAndSleep " <--- SETUP ---> "
-docker network create tfg-elastest_envoymesh
-./selenoid-sut.sh
+./emulator-sut-grid.sh
 
-# Esperamos a que la pagina este lista
-printAndSleep " <--- WAIT FOR WEB PAGE ---> "
-./tfg-setup/docker-for-wait-angular.sh
-
-TEST=W_posts.robot
+TEST=M_posts.robot
 if [ ! -z $1 ]; then
     TEST=$1
 fi
@@ -35,15 +30,14 @@ version=85.0
 country=es
 environment=TEST
 remote_url=http://selenoid:4444/wd/hub
-remote_url_mob=
+remote_url_mob=http://selenium_hub:4444/wd/hub
 test_cases=
 test_suite=$TEST
 " > $current_dir/tfg-elastest-test/tfg-elastest-test-robotframework/Local/.env
 
-printAndSleep "Ejecutamos test: $TEST (http://localhost:9090)"
-bash ./tfg-elastest-test/tfg-elastest-test-robotframework/Local/run_test_web.sh
+printAndSleep "Ejecutamos test: $TEST (Emulador en: http://localhost)"
+bash ./tfg-elastest-test/tfg-elastest-test-robotframework/Local/run_test_movil.sh
 
 # Paramos infrastructura.
 printAndSleep " <--- TEARDOWN ---> "
-./selenoid-sut.sh down
-docker network rm tfg-elastest_envoymesh
+./emulator-sut-grid.sh down

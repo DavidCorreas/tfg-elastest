@@ -1,0 +1,8 @@
+FROM ubuntu:20.04
+
+RUN apt-get update
+RUN apt-get install -y wget
+
+COPY wait-for-page.sh .
+
+CMD ./wait-for-page.sh
