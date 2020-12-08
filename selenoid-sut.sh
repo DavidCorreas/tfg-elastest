@@ -18,6 +18,7 @@ function printAndSleep {
 # Levantamos sut, con los endpoints configurados para que 
 # funcionen en los navegadores de selenoid
 if [ "$mode" != "down" ]; then
+    docker network create tfg-elastest_envoymesh
     printAndSleep "SUT (only works through selenoid, http://localhost:9090)"
     docker-compose -f tfg-elastest-sut/docker-compose.yml -f tfg-elastest-sut/production-compose.yml $mode
 
