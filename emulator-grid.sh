@@ -51,7 +51,7 @@ printAndSleep "Selenium Hub and Appium"
 docker-compose -f tfg-elastest-test/appium-hub/compose-grid.yml --project-directory=. --env-file=./tfg-elastest-test/appium-hub/emu-docker.env $mode
 
 # Elimina lo ultimo para que se elimine la red
-if [ "$mode" == "down" ]; then
-    printAndSleep "Web emulator"
-    docker-compose -f tfg-elastest-emulator/js/docker/docker-compose.yaml -f tfg-elastest-emulator/js/docker/development.yaml -p tfg-elastest --project-directory=. $mode
-fi
+# if [ "$mode" == "down" ]; then
+#     printAndSleep "Web emulator"
+#     docker-compose -f tfg-elastest-emulator/js/docker/docker-compose.yaml -f tfg-elastest-emulator/js/docker/development.yaml -p tfg-elastest --project-directory=. $mode
+# fi
