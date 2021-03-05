@@ -46,4 +46,4 @@ bash ./tfg-elastest-test/tfg-elastest-test-robotframework/Local/run_test_web.sh
 # Paramos infrastructura.
 printAndSleep " <--- TEARDOWN ---> "
 ./selenoid-sut.sh down
-docker network rm tfg-elastest_envoymesh
+# docker network rm tfg-elastest_envoymesh
