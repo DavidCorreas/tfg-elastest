@@ -19,6 +19,7 @@ function printAndSleep {
 
 function wait-for-device {
     rm /tmp/tmp-script.sh 2> /dev/null
+    docker network create tfg-elastest_envoymesh
     echo "#!/bin/bash" >> /tmp/tmp-script.sh
     echo -n "docker run " >> /tmp/tmp-script.sh
         echo -n "--rm -it " >> /tmp/tmp-script.sh
@@ -36,10 +37,10 @@ set -a
 source tfg-elastest-test/appium-hub/emu-docker.env
 
 # Iniciamos el emulador
-if [ "$mode" != "down" ]; then
-    printAndSleep "Web emulator"
-    docker-compose -f tfg-elastest-emulator/js/docker/docker-compose.yaml -f tfg-elastest-emulator/js/docker/development.yaml -p tfg-elastest --project-directory=. $mode
-fi
+# if [ "$mode" != "down" ]; then
+#     printAndSleep "Web emulator"
+#     docker-compose -f tfg-elastest-emulator/js/docker/docker-compose.yaml -f tfg-elastest-emulator/js/docker/development.yaml -p tfg-elastest --project-directory=. $mode
+# fi
 
 # Appium espera a tener el emulador disponible para conectarse con el hub
 if [ "$mode" != "down" ]; then
