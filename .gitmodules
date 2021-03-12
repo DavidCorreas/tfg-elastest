@@ -1,6 +1,7 @@
 [submodule "tfg-elastest-sut"]
 	path = tfg-elastest-sut
 	url = https://github.com/DavidCorreas/tfg-elastest-sut.git
+	branch = no-emulator
 [submodule "tfg-elastest-emulator"]
 	path = tfg-elastest-emulator
 	url = https://github.com/google/android-emulator-container-scripts.git
